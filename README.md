@@ -1,8 +1,5 @@
 # ProyectoM2_DayanaGonzales
 
-API REST para MiniBlog 
-
-# API MiniBlog
 API REST desarrollada en Node.js + Express, con persistencia en PostgreSQL, que gestiona `authors` y `posts` (modelo tipo JSONPlaceholder). Proyecto Integrador 2 — SoyHenry (contexto ficticio: DevSpark).
 
 ## Descripción del proyecto
@@ -118,9 +115,16 @@ npm test
 Cobertura actual: creación de authors/posts, obtención por id, validaciones de campos obligatorios, manejo de 404 en recursos inexistentes, y el endpoint `posts/author/:authorId`.
 
 # Documentación OpenAPI
-La especificación está en \[`openapi.yaml`](./openapi.yaml). Para visualizarla de forma interactiva:
+La especificación está en \[`openapi.yaml`](./openapi.yaml). Se puede visualizar de dos formas:
 
+**Opción 1: Swagger UI incluido en la API**
 
+Con el servidor corriendo (local o en producción), la documentación interactiva está disponible en `/api-docs`:
+
+- Local: http://localhost:3000/api-docs
+- Producción: https://api-miniblog-production-523e.up.railway.app/api-docs
+
+**Opción 2: Swagger Editor**
 
 1. Copia el contenido del archivo `openapi.yaml`
 
