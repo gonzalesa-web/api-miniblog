@@ -1,86 +1,55 @@
 # api-miniblog
 
-API REST para MiniBlog // Proyecto Integrador 2
+API REST para MiniBlog 
 
-
-
-\# API MiniBlog
-
-
-
+# API MiniBlog
 API REST desarrollada en Node.js + Express, con persistencia en PostgreSQL, que gestiona `authors` y `posts` (modelo tipo JSONPlaceholder). Proyecto Integrador 2 — SoyHenry (contexto ficticio: DevSpark).
 
-
-
-\## Descripción del proyecto
-
-
-
+## Descripción del proyecto
 La API permite crear, leer, actualizar y eliminar autores y publicaciones, con relación uno-a-muchos entre `authors` y `posts` (un author puede tener muchos posts). Incluye validaciones básicas, manejo de errores, tests automatizados y documentación OpenAPI.
 
+## Requisitos
+
+- Node.js v18 o superior
+- PostgreSQL v14 o superior
+- npm
 
 
-\## Requisitos
+# Instalación y ejecución local
 
-
-
-\- Node.js v18 o superior
-
-\- PostgreSQL v14 o superior
-
-\- npm
-
-
-
-\## Instalación y ejecución local
-
-
-
-1\. Clonar el repositorio:
+1. Clonar el repositorio:
 
 ```bash
+ git clone https://github.com/gonzalesa-web/api-miniblog.git
+cd api-miniblog
 
-&#x20;  git clone https://github.com/gonzalesa-web/api-miniblog.git
+```
+2.Instalar dependencias:
 
-&#x20;  cd api-miniblog
+```bash
+npm install
 
 ```
 
-
-
-2\. Instalar dependencias:
-
-```bash
-
-&#x20;  npm install
-
-```
-
-
-
-3\. Crear la base de datos en PostgreSQL:
+3. Crear la base de datos en PostgreSQL:
 
 ```sql
 
-&#x20;  CREATE DATABASE miniblog;
+CREATE DATABASE miniblog;
 
 ```
 
-
-
-4\. Ejecutar los scripts de setup y seed:
+4. Ejecutar los scripts de setup y seed:
 
 ```bash
 
-&#x20;  psql -U postgres -d miniblog -f db/setup.sql
+psql -U postgres -d miniblog -f db/setup.sql
 
-&#x20;  psql -U postgres -d miniblog -f db/seed.sql
+psql -U postgres -d miniblog -f db/seed.sql
 
 ```
 
-
-
-5\. Crear el archivo `.env` en la raíz (usa `.env.example` como base):
+5.Crear el archivo `.env` en la raíz (usa `.env.example` como base):
 
 DB\_USER=postgres
 
@@ -95,28 +64,17 @@ DB\_NAME=miniblog
 PORT=3000
 
 
-
-
-
-
-
-6\. Levantar el servidor:
+6.Levantar el servidor:
 
 ```bash
 
-&#x20;  npm run dev
+npm run dev
 
 ```
+La API queda disponible en `http://localhost:3000`.
 
 
-
-&#x20;  La API queda disponible en `http://localhost:3000`.
-
-
-
-\## Endpoints
-
-
+*Endpoints*
 
 | Método | Ruta | Descripción |
 
@@ -146,13 +104,9 @@ PORT=3000
 
 
 
-\## Tests
-
-
+# Tests
 
 El proyecto usa `jest` + `supertest` para tests automatizados sobre los endpoints principales.
-
-
 
 Ejecutar:
 
@@ -161,26 +115,16 @@ Ejecutar:
 npm test
 
 ```
-
-
-
 Cobertura actual: creación de authors/posts, obtención por id, validaciones de campos obligatorios, manejo de 404 en recursos inexistentes, y el endpoint `posts/author/:authorId`.
 
-
-
-\## Documentación OpenAPI
-
-
-
+# Documentación OpenAPI
 La especificación está en \[`openapi.yaml`](./openapi.yaml). Para visualizarla de forma interactiva:
 
 
 
-1\. Copia el contenido del archivo `openapi.yaml`
+1. Copia el contenido del archivo `openapi.yaml`
 
-2\. Pégalo en \[editor.swagger.io](https://editor.swagger.io)
-
-
+2. Pégalo en \[editor.swagger.io](https://editor.swagger.io)
 
 ## Deployment en Railway
 
@@ -213,7 +157,7 @@ GET https://api-miniblog-production-523e.up.railway.app/authors
 Este proyecto fue desarrollado con apoyo de Claude (Anthropic) como asistente durante el desarrollo. La IA se usó para:
 
 - Guiar la estructura del proyecto y el orden de implementación (arrays en memoria → conexión a PostgreSQL → SQL real)
-- Generar el código base de los services, routes, middleware de errores y tests, revisado y probado manualmente en cada paso
+- Generar el código base de los services, routes, middleware de errores y tests, revisado y probado manualmente en cada paso 
 - Resolver troubleshooting de entorno local (configuración de PostgreSQL en Windows, codificación UTF-8)
 - Redactar la documentación OpenAPI y este README
 
@@ -224,8 +168,8 @@ Todo el código fue probado manualmente (Postman, navegador, psql) antes de avan
 Además del desarrollo inicial, se usó Claude Code para una revisión de cumplimiento posterior. Prompts reales de esa sesión:
 
 1. *"Actúa como un revisor e identifica si el presente proyecto cumple con todo todo lo solicitado por las consignas."* → generó un checklist de cumplimiento contra la consigna del PI2 (endpoints, validaciones, SQL, tests, OpenAPI, deployment).
-2. *"ok pero entonces como revisor de manera estricta identifica y determina que cambios se deben realizar para dar fiel cumplimiento a todas las especificidades de las consignas obligatorias."* → identificó 5 incumplimientos concretos: falta de validación de email único y de campos no vacíos en los `PUT`, `.env.example` desalineado con `DATABASE_URL`, y contenido duplicado/`TODO` sin limpiar en este README.
+2. *"Desde tu rol como revisor de manera estricta identifica y determina que cambios se deben realizar para dar fiel cumplimiento a todas las especificidades de las consignas obligatorias."* → identificó 5 incumplimientos concretos: falta de validación de email único y de campos no vacíos en los `PUT`, `.env.example` desalineado con `DATABASE_URL`, y contenido duplicado/`TODO` sin limpiar en este README.
 3. *"si pero sin romper el código y luego realiza la comprobación final de que todo está correcto."* → aplicó las correcciones (`routes/authors.js`, `routes/posts.js`, `services/authorsService.js`, `.env.example`, este README) y corrió la suite de tests (`npm test`) para confirmar que nada se rompió.
 
-Nota: los prompts de las sesiones de desarrollo inicial (creación de services, routes, tests, OpenAPI) no quedaron registrados textualmente en su momento. Si se conservan en el historial de la herramienta usada, se recomienda agregarlos aquí para completar el registro.
+
 
