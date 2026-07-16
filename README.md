@@ -184,9 +184,32 @@ La especificación está en \[`openapi.yaml`](./openapi.yaml). Para visualizarla
 
 \## Deployment en Railway
 
+## Deployment en Railway
+
+La API está desplegada en Railway y disponible públicamente en:
+
+**URL pública:** https://api-miniblog-production-523e.up.railway.app
+
+### Pasos seguidos para el deploy
+
+1. Se creó un proyecto en Railway y se conectó el repositorio de GitHub para deploy automático (cada `git push` a `main` redespliega la app).
+2. Se agregó un servicio de PostgreSQL dentro del mismo proyecto.
+3. Se configuró la variable de entorno `DATABASE_URL` en el servicio de la API, referenciando la base de datos de Postgres (`${{Postgres.DATABASE_URL}}`).
+4. Se inicializó la base de datos remota ejecutando `db/setup.sql` y `db/seed.sql` contra la URL pública de la base de datos de Railway.
+5. Se generó un dominio público desde Settings → Networking → Generate Domain.
+6. Se verificó que los endpoints respondan correctamente en producción (`/authors`, `/posts/author/:authorId`, etc.).
+
+### Variables de entorno en Railway
+
+- `DATABASE_URL`: referenciada automáticamente al servicio de PostgreSQL de Railway (incluye SSL)
+- `PORT`: inyectada automáticamente por Railway (no se configura manualmente)
+
+Ejemplo de endpoint funcionando en producción:
+```
+GET https://api-miniblog-production-523e.up.railway.app/authors
+```
 
 
-\*(pendiente — se completa después del deploy)\*
 
 
 
