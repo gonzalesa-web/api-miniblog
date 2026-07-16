@@ -6,6 +6,8 @@ info:
 servers:
   - url: http://localhost:3000
     description: Servidor local
+  - url: https://api-miniblog-production-523e.up.railway.app
+    description: Servidor en producción (Railway)
 paths:
   /authors:
     get:
