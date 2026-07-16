@@ -67,7 +67,17 @@ router.put('/:id', async (req, res, next) => {
 
     const { title, content, author_id, published } = req.body || {};
 
-    if (author_id !== undefined) {
+    if (title !== undefined && !title) {
+      return res.status(400).json({ error: 'title no puede estar vacío' });
+    }
+    if (content !== undefined && !content) {
+      return res.status(400).json({ error: 'content no puede estar vacío' });
+    }
+    if (author_id !== undefined && !author_id) {
+      return res.status(400).json({ error: 'author_id no puede estar vacío' });
+    }
+
+    if (author_id) {
       const author = await authorsService.getAuthorById(author_id);
       if (!author) {
         return res.status(400).json({ error: 'author_id no corresponde a un author existente' });

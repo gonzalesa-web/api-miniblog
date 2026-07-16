@@ -36,8 +36,10 @@ async function deleteAuthor(id) {
   return result.rows[0];
 }
 
-async function emailExists(email) {
-  const result = await pool.query('SELECT id FROM authors WHERE email = $1', [email]);
+async function emailExists(email, excludeId = null) {
+  const result = excludeId
+    ? await pool.query('SELECT id FROM authors WHERE email = $1 AND id != $2', [email, excludeId])
+    : await pool.query('SELECT id FROM authors WHERE email = $1', [email]);
   return result.rows.length > 0;
 }
 

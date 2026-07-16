@@ -51,6 +51,21 @@ router.put('/:id', async (req, res, next) => {
     }
 
     const { name, email, bio } = req.body || {};
+
+    if (name !== undefined && !name) {
+      return res.status(400).json({ error: 'name no puede estar vacío' });
+    }
+    if (email !== undefined && !email) {
+      return res.status(400).json({ error: 'email no puede estar vacío' });
+    }
+
+    if (email) {
+      const exists = await authorsService.emailExists(email, req.params.id);
+      if (exists) {
+        return res.status(400).json({ error: 'El email ya está en uso' });
+      }
+    }
+
     const updated = await authorsService.updateAuthor(req.params.id, { name, email, bio });
     res.status(200).json(updated);
   } catch (err) {

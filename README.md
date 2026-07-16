@@ -182,8 +182,6 @@ La especificación está en \[`openapi.yaml`](./openapi.yaml). Para visualizarla
 
 
 
-\## Deployment en Railway
-
 ## Deployment en Railway
 
 La API está desplegada en Railway y disponible públicamente en:
@@ -210,34 +208,24 @@ GET https://api-miniblog-production-523e.up.railway.app/authors
 ```
 
 
-
-
-
-\- URL pública: `TODO`
-
-\- Variables de entorno configuradas en Railway: `DB\_USER`, `DB\_PASSWORD`, `DB\_HOST`, `DB\_PORT`, `DB\_NAME`, `PORT`
-
-\- Evidencia del deploy: `TODO`
-
-
-
-\## Registro de uso de IA
-
-
+## Registro de uso de IA
 
 Este proyecto fue desarrollado con apoyo de Claude (Anthropic) como asistente durante el desarrollo. La IA se usó para:
 
-
-
-\- Guiar la estructura del proyecto y el orden de implementación (arrays en memoria → conexión a PostgreSQL → SQL real)
-
-\- Generar el código base de los services, routes, middleware de errores y tests, revisado y probado manualmente en cada paso
-
-\- Resolver troubleshooting de entorno local (configuración de PostgreSQL en Windows, codificación UTF-8)
-
-\- Redactar la documentación OpenAPI y este README
-
-
+- Guiar la estructura del proyecto y el orden de implementación (arrays en memoria → conexión a PostgreSQL → SQL real)
+- Generar el código base de los services, routes, middleware de errores y tests, revisado y probado manualmente en cada paso
+- Resolver troubleshooting de entorno local (configuración de PostgreSQL en Windows, codificación UTF-8)
+- Redactar la documentación OpenAPI y este README
 
 Todo el código fue probado manualmente (Postman, navegador, psql) antes de avanzar al siguiente paso, siguiendo la guía del proyecto.
+
+### Prompts utilizados (sesión de revisión y corrección)
+
+Además del desarrollo inicial, se usó Claude Code para una revisión de cumplimiento posterior. Prompts reales de esa sesión:
+
+1. *"Actúa como un revisor e identifica si el presente proyecto cumple con todo todo lo solicitado por las consignas."* → generó un checklist de cumplimiento contra la consigna del PI2 (endpoints, validaciones, SQL, tests, OpenAPI, deployment).
+2. *"ok pero entonces como revisor de manera estricta identifica y determina que cambios se deben realizar para dar fiel cumplimiento a todas las especificidades de las consignas obligatorias."* → identificó 5 incumplimientos concretos: falta de validación de email único y de campos no vacíos en los `PUT`, `.env.example` desalineado con `DATABASE_URL`, y contenido duplicado/`TODO` sin limpiar en este README.
+3. *"si pero sin romper el código y luego realiza la comprobación final de que todo está correcto."* → aplicó las correcciones (`routes/authors.js`, `routes/posts.js`, `services/authorsService.js`, `.env.example`, este README) y corrió la suite de tests (`npm test`) para confirmar que nada se rompió.
+
+Nota: los prompts de las sesiones de desarrollo inicial (creación de services, routes, tests, OpenAPI) no quedaron registrados textualmente en su momento. Si se conservan en el historial de la herramienta usada, se recomienda agregarlos aquí para completar el registro.
 
