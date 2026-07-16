@@ -2,6 +2,10 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load('./openapi.yaml');
+
 app.use(express.json());
 
 const authorsRoutes = require('./routes/authors');
@@ -9,6 +13,7 @@ const postsRoutes = require('./routes/posts');
 
 app.use('/authors', authorsRoutes);
 app.use('/posts', postsRoutes);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Middleware para capturar JSON mal formado
 app.use((err, req, res, next) => {
