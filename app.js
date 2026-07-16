@@ -10,23 +10,14 @@ app.use(express.json());
 
 const authorsRoutes = require('./routes/authors');
 const postsRoutes = require('./routes/posts');
+const { jsonParseErrorHandler, globalErrorHandler } = require('./middlewares/errorHandler');
 
 app.use('/authors', authorsRoutes);
 app.use('/posts', postsRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// Middleware para capturar JSON mal formado
-app.use((err, req, res, next) => {
-  if (err.type === 'entity.parse.failed') {
-    return res.status(400).json({ error: 'JSON mal formado en el body' });
-  }
-  next(err);
-});
-
-// Middleware global de manejo de errores (debe ir al final)
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: 'Error interno del servidor' });
-});
+// Middlewares de manejo de errores (deben ir al final)
+app.use(jsonParseErrorHandler);
+app.use(globalErrorHandler);
 
 module.exports = app;
