@@ -1,4 +1,4 @@
-# api-miniblog
+# ProyectoM2_DayanaGonzales
 
 API REST para MiniBlog 
 
